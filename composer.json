@@ -1,6 +1,6 @@
 {
   "name": "schema-keeper/executor",
-  "description": "The lightweight PHP-library that simplifies interaction with PostgreSQL stored procedures",
+  "description": "Simple interaction with PostgreSQL stored procedures",
   "minimum-stability": "stable",
   "type": "library",
   "license": "MIT",
