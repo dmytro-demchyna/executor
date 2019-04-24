@@ -20,16 +20,18 @@ $function$;
 ```php
 <?php
 
+use SchemaKeeper\Tools\Executor\Fetcher\SingleColumn;
+use SchemaKeeper\Tools\Executor\Exception\RaisedException;
+
 try {
     
-    $executor->execFunc('public.test_function', [], new SchemaKeeper\Tools\Executor\Fetcher\SingleColumn());
+    $executor->execFunc('public.test_function', [], new SingleColumn());
     
-} catch (SchemaKeeper\Tools\Executor\Exception\RaisedException $e) {
+} catch (RaisedException $e) {
     
     echo $e->getExceptionName().' '.$e->getExceptionHint();
-    
-    // Will display: "MyException TestHint"
-    
+  
+    // Will display: "MyException TestHint"  
 }
 ```
 
@@ -57,9 +59,9 @@ $function$;
 ```php
 <?php
 
-$result = $executor->execFunc('public.test_function', [
-    ':dummy' => 'test',
-], new SchemaKeeper\Tools\Executor\Fetcher\MultipleRow());
+use SchemaKeeper\Tools\Executor\Fetcher\MultipleRow;
+
+$result = $executor->execFunc('public.test_function', [':dummy' => 'test'], new MultipleRow());
 
 var_dump($result);
 
