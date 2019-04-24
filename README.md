@@ -36,7 +36,7 @@ try {
 ### Fetching
 
 ```postgresql
-CREATE OR REPLACE FUNCTION public.test_function()
+CREATE OR REPLACE FUNCTION public.test_function(_dummy TEXT)
     RETURNS TABLE(param1 INTEGER, param2 TEXT)
     LANGUAGE plpgsql
 AS $function$
@@ -57,7 +57,9 @@ $function$;
 ```php
 <?php
 
-$result = $executor->execFunc('public.test_function', [], new SchemaKeeper\Tools\Executor\Fetcher\MultipleRow());
+$result = $executor->execFunc('public.test_function', [
+    ':dummy' => 'test',
+], new SchemaKeeper\Tools\Executor\Fetcher\MultipleRow());
 
 var_dump($result);
 
