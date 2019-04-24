@@ -7,7 +7,9 @@ Executor is the PHP-library that helps to execute [PL/pgSQL](https://www.postgre
 ### Exception handling
 
 ```postgresql
-CREATE OR REPLACE FUNCTION public.test_function() RETURNS VOID LANGUAGE plpgsql
+CREATE OR REPLACE FUNCTION public.test_function() 
+  RETURNS VOID
+  LANGUAGE plpgsql
 AS $function$
 BEGIN
    RAISE EXCEPTION 'MyException' USING HINT = 'TestHint';
