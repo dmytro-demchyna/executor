@@ -63,21 +63,36 @@ END;
 $function$;
 ```
 
-Call it and fetch all rows from returning value:
+**Executor** provides three different fetchers:
 
 ```php
 <?php
 
+use SchemaKeeper\Tools\Executor\Fetcher\SingleColumn;
+use SchemaKeeper\Tools\Executor\Fetcher\SingleRow;
 use SchemaKeeper\Tools\Executor\Fetcher\MultipleRow;
 
-$result = $executor->execFunc('public.test_function', [':dummy' => 'test'], new MultipleRow());
+$params = [':dummy' => 'test'];
 
-var_dump($result);
+$result1 = $executor->execFunc('public.test_function', $params, new SingleColumn());
+$result2 = $executor->execFunc('public.test_function', $params, new SingleRow());
+$result3 = $executor->execFunc('public.test_function', $params, new MultipleRow());
+
+var_dump($result1, $result2, $result3);
 ```
 
 `var_dump` will output:
 
 ```
+int(1)
+
+array(2) {
+  'param1' =>
+  int(1)
+  'param2' =>
+  string(3) "One"
+}
+
 array(2) {
   [0] =>
   array(2) {
