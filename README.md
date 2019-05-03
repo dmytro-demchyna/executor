@@ -103,3 +103,6 @@ $errorHandler = new \SchemaKeeper\Tools\Executor\ErrorHandler();
 
 $executor = new \SchemaKeeper\Tools\Executor\Executor($conn, $errorHandler);
 ```
+
+## Contributing
+Please refer to [CONTRIBUTING.md](https://github.com/dmytro-demchyna/executor/blob/master/.github/CONTRIBUTING.md) for information on how to contribute to SchemaKeeper.
