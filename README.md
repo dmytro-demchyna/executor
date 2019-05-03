@@ -23,7 +23,7 @@ END;
 $function$;
 ```
 
-Call it via **Executor**:
+The way to call it via **Executor**:
 
 ```php
 <?php
@@ -42,7 +42,7 @@ Echo in the `catch` block will output: "MyException TestHint"
 
 ### Fetching
 
-Suppose the stored procedure that returns table:
+Suppose stored procedure returns a table:
 
 ```postgresql
 CREATE OR REPLACE FUNCTION public.test_function(_dummy TEXT)
