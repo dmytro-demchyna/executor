@@ -1,10 +1,16 @@
 # Executor
 
+[![Minimum PHP Version](https://img.shields.io/badge/PHP-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://php.net/)
+[![Minimum PostgreSQL Version](https://img.shields.io/badge/PostgreSQL-%3E%3D%209.4-8892BF.svg?style=flat-square)](https://www.postgresql.org/)
+[![Build Status](https://travis-ci.com/dmytro-demchyna/executor.svg?branch=master)](https://travis-ci.com/dmytro-demchyna/executor)
+
 Executor is the PHP-library that helps to execute [PL/pgSQL](https://www.postgresql.org/docs/current/plpgsql.html) stored procedures.
 
 ## Examples
 
 ### Exception handling
+
+Suppose the stored procedure that throws an exception:
 
 ```postgresql
 CREATE OR REPLACE FUNCTION public.test_function() 
@@ -17,6 +23,8 @@ END;
 $function$;
 ```
 
+Call it via **Executor**:
+
 ```php
 <?php
 
@@ -24,18 +32,17 @@ use SchemaKeeper\Tools\Executor\Fetcher\SingleColumn;
 use SchemaKeeper\Tools\Executor\Exception\RaisedException;
 
 try {
-    
-    $executor->execFunc('public.test_function', [], new SingleColumn());
-    
+    $executor->execFunc('public.test_function', [], new SingleColumn()); 
 } catch (RaisedException $e) {
-    
     echo $e->getExceptionName().' '.$e->getExceptionHint();
-  
-    // Will display: "MyException TestHint"  
 }
 ```
 
+Echo in the `catch` block will output: "MyException TestHint"  
+
 ### Fetching
+
+Suppose the stored procedure that returns table:
 
 ```postgresql
 CREATE OR REPLACE FUNCTION public.test_function(_dummy TEXT)
@@ -56,6 +63,8 @@ END;
 $function$;
 ```
 
+Call it and fetch all rows from returning value:
+
 ```php
 <?php
 
@@ -64,8 +73,11 @@ use SchemaKeeper\Tools\Executor\Fetcher\MultipleRow;
 $result = $executor->execFunc('public.test_function', [':dummy' => 'test'], new MultipleRow());
 
 var_dump($result);
+```
 
-/*
+`var_dump` will output:
+
+```
 array(2) {
   [0] =>
   array(2) {
@@ -82,8 +94,6 @@ array(2) {
     string(3) "Two"
   }
 }
- */
-
 ```
 
 ### Initialization
@@ -91,17 +101,19 @@ array(2) {
 ```php
 <?php
 
+use SchemaKeeper\Tools\Executor\Connection\PDOProxy;
+use SchemaKeeper\Tools\Executor\ErrorHandler;
+use SchemaKeeper\Tools\Executor\Executor;
+
 $dsn = 'pgsql:dbname=schema_keeper;host=localhost';
 
-$pdo = new \PDO($dsn, 'postgres', 'postgres', [
-    \PDO::ATTR_ERRMODE => \PDO::ERRMODE_EXCEPTION
-]);
+$pdo = new PDO($dsn, 'postgres', 'postgres', [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
 
-$conn = new \SchemaKeeper\Tools\Executor\Connection\PDOProxy($pdo);
+$conn = new PDOProxy($pdo);
 
-$errorHandler = new \SchemaKeeper\Tools\Executor\ErrorHandler();
+$errorHandler = new ErrorHandler();
 
-$executor = new \SchemaKeeper\Tools\Executor\Executor($conn, $errorHandler);
+$executor = new Executor($conn, $errorHandler);
 ```
 
 ## Contributing
