@@ -10,7 +10,7 @@ Executor is the PHP-library that helps to execute [PL/pgSQL](https://www.postgre
 
 ### Exception handling
 
-Suppose the stored procedure that throws an exception:
+Suppose a stored procedure throws an exception:
 
 ```postgresql
 CREATE OR REPLACE FUNCTION public.test_function() 
