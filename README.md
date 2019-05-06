@@ -3,6 +3,7 @@
 [![Minimum PHP Version](https://img.shields.io/badge/PHP-%3E%3D%205.6-8892BF.svg?style=flat-square)](https://php.net/)
 [![Minimum PostgreSQL Version](https://img.shields.io/badge/PostgreSQL-%3E%3D%209.4-8892BF.svg?style=flat-square)](https://www.postgresql.org/)
 [![Build Status](https://travis-ci.com/dmytro-demchyna/executor.svg?branch=master)](https://travis-ci.com/dmytro-demchyna/executor)
+[![Codecov](https://codecov.io/gh/dmytro-demchyna/executor/branch/master/graphs/badge.svg)](https://codecov.io/gh/dmytro-demchyna/executor)
 
 Executor is the PHP-library that helps to execute [PL/pgSQL](https://www.postgresql.org/docs/current/plpgsql.html) stored procedures.
 
