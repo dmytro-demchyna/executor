@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.com/dmytro-demchyna/executor.svg?branch=master)](https://travis-ci.com/dmytro-demchyna/executor)
 [![Codecov](https://codecov.io/gh/dmytro-demchyna/executor/branch/master/graphs/badge.svg)](https://codecov.io/gh/dmytro-demchyna/executor)
 
-Executor is the PHP-library that helps to execute [PL/pgSQL](https://www.postgresql.org/docs/current/plpgsql.html) stored procedures.
+The Executor helps to execute [PL/pgSQL](https://www.postgresql.org/docs/current/plpgsql.html) stored procedures.
 
 ## Examples
 
