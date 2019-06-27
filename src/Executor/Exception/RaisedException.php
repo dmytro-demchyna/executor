@@ -7,7 +7,7 @@
 
 namespace SchemaKeeper\Tools\Executor\Exception;
 
-class RaisedException extends \RuntimeException
+class RaisedException extends ExecutorException
 {
     /**
      * @var string

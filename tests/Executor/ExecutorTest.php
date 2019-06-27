@@ -44,6 +44,27 @@ class ExecutorTest extends ExecutorTestCase
         self::assertSame(8, $result);
     }
 
+    function testItExecuteAllowedFunction()
+    {
+        $this->target->setAllowedFunctions(['public.test_function']);
+        $this->errorHandler->shouldNotReceive('handleError');
+
+        $result = $this->target->execFunc('public.test_function', [':param' => 4], new SingleColumn());
+        self::assertSame(8, $result);
+    }
+
+    /**
+     * @expectedException \SchemaKeeper\Tools\Executor\Exception\ForbiddenFunction
+     * @expectedExceptionMessage Execution of the public.test_function is not allowed
+     */
+    function testItNotExecuteForbiddenFunction()
+    {
+        $this->target->setAllowedFunctions([]);
+        $this->errorHandler->shouldNotReceive('handleError');
+
+        $this->target->execFunc('public.test_function', [':param' => 4], new SingleColumn());
+    }
+
     /**
      * @expectedException \PDOException
      * @expectedExceptionMessage invalid input syntax for integer: "qwerty"

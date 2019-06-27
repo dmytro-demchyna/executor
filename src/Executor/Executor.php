@@ -8,6 +8,7 @@
 namespace SchemaKeeper\Tools\Executor;
 
 use SchemaKeeper\Tools\Executor\Connection\IConnection;
+use SchemaKeeper\Tools\Executor\Exception\ForbiddenFunction;
 use SchemaKeeper\Tools\Executor\Fetcher\Fetcher;
 
 class Executor
@@ -15,12 +16,17 @@ class Executor
     /**
      * @var IConnection
      */
-    protected $conn;
+    private $conn;
 
     /**
      * @var ErrorHandler
      */
-    protected $errorHandler;
+    private $errorHandler;
+
+    /**
+     * @var array|null
+     */
+    private $allowedFunctions = null;
 
     public function __construct(IConnection $conn, ErrorHandler $errorHandler)
     {
@@ -69,6 +75,10 @@ class Executor
      */
     public function execFunc($functionName, array $paramValues, Fetcher $fetcher)
     {
+        if ($this->allowedFunctions !== null && !in_array($functionName, $this->allowedFunctions)) {
+            throw new ForbiddenFunction('Execution of the '.$functionName.' is not allowed');
+        }
+
         $params = implode(',', array_keys($paramValues));
 
         array_walk($paramValues, function (&$item) {
@@ -89,5 +99,13 @@ class Executor
         }
 
         return $result;
+    }
+
+    /**
+     * @param array|null $allowedFunctions
+     */
+    public function setAllowedFunctions($allowedFunctions)
+    {
+        $this->allowedFunctions = $allowedFunctions;
     }
 }
